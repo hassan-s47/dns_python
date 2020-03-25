@@ -75,8 +75,12 @@ def searchrecord(records,name,flag):
     return r1
 
 def insertrec(records,message):
+    
     r1 = record()
     message = message.split(' ')
+    ans = searchrecord(records,message[1],int(message[3]))
+    if(ans.value!='???'):
+        return
     r1.ttl = 60
     r1.static =0
     if(len(records)!=0):
