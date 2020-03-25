@@ -1,4 +1,4 @@
-
+import time
 
 class query:
     name=''
@@ -58,13 +58,15 @@ def loadrecordtable(filestr):
     return records
 
 def delrecord(records):
-    for rec in records:
-        if rec.ttl ==1:
-            print(rec)
-            records.remove(rec)
-            continue
-        if rec.static != 1:
-            rec.ttl = rec.ttl -1
+    while(True):
+        time.sleep(1)
+        for rec in records:
+            if rec.ttl ==1:
+                print(rec)
+                records.remove(rec)
+                continue
+            if rec.static != 1:
+                rec.ttl = rec.ttl -1
 
 def searchrecord(records,name,flag):
     for rec in records:
