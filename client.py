@@ -6,8 +6,6 @@ import time
 
 recordtable=[]
 
-
-
 def connect(message):
     response=''
     serverName = 'localhost'
@@ -29,9 +27,10 @@ def request():
         dns  = input('Enter the hostname/domain name for query:')
         flag = input('Enter query type:\n0.A\n1.AAAA\n2.CNAME\n3.NS\n')
         
-        key = searchrecord(recordtable,dns,flag)
+        key = searchrecord(recordtable,dns,int(flag))
+
         if key.value!='???':
-            print('Found')
+            print('Found in Client Table')
             key.show()
             continue
         message = query()

@@ -62,11 +62,11 @@ def delrecord(records):
         time.sleep(1)
         for rec in records:
             if rec.ttl ==1:
-                print(rec)
+                print('\nRecord Expired by TTL\n')
                 records.remove(rec)
                 continue
             if rec.static != 1:
-                rec.ttl = rec.ttl -1
+                rec.ttl = rec.ttl -1 
 
 def searchrecord(records,name,flag):
     for rec in records:
