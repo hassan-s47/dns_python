@@ -1,0 +1,7 @@
+1 www.csusm.edu 144.37.5.45 0
+2 cc.csusm.edu 144.37.5.117 0
+3 cc1.csusm.edu cc.csusm.edu 2
+4 cc1.csusm.edu 144.37.5.118 0
+5 my.csusm.edu 144.37.5.150 0
+6 qualcomm.com dns.qualcomm.com 3
+7 viasat.com dns.viasat.com 3
