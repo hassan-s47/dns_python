@@ -16,13 +16,32 @@ def process(message):
     if result.value!='???':
         response = result.encode() 
     else:
-        ans = searchrecord(recordtable,message[1],3)
-        if ans.value == '???':
-            message[2] = 'Not_Found'
-            response = response.join(message)
+        for rec in recordtable:
+            if(rec.flag==3):
+                if(message[1].find(rec.name)>0):  #Could be generic code but we are testing it on localhost therefore we simply hard code it :)
+                    temp = message
+                    message = ' '
+                    message =message.join(temp)
+                    if(rec.name == 'qualcomm.com'):
+                        serverPort = 21000
+                    elif rec.name == 'viasat.com':
+                        serverPort = 22000
+                    serverName = 'localhost'
+                    clientSocket = socket(AF_INET, SOCK_DGRAM)
+                    clientSocket.sendto(message.encode(),(serverName, serverPort))
+                    response, serverAddress = clientSocket.recvfrom(2048)
+                    clientSocket.close()
+                    insertrec(recordtable,response.decode())
+                    return response.decode()
+
+       
+        message[2] = 'Not_Found'
+        response = response.join(message)
+            
         
         
     return response
+
 
 
 def serve():
@@ -31,6 +50,9 @@ def serve():
     serverSocket.bind(('', serverPort))
     print ('The server is ready to receive')
     while 1:
+        print('ID   Name       Value         Type  TTL  Static')
+        for rec in recordtable:
+            rec.show()
         message, clientAddress = serverSocket.recvfrom(2048)
         response = process(message.decode())
         serverSocket.sendto(response.encode(), clientAddress)
@@ -38,9 +60,7 @@ def serve():
 
 
 if __name__ == "__main__":
-    print('ID   Name       Value         Type  TTL  Static')
-    for rec in recordtable:
-        rec.show()
+   
 
     t1 = threading.Thread(target=serve,args=())
     t2 = threading.Thread(target=delrecord,args=(recordtable,))
