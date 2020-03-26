@@ -54,8 +54,15 @@ def serve():
         for rec in recordtable:
             rec.show()
         message, clientAddress = serverSocket.recvfrom(2048)
-        response = process(message.decode())
-        serverSocket.sendto(response.encode(), clientAddress)
+        if(message==b'admin'):
+            response = str(len(recordtable))
+            serverSocket.sendto(response.encode(), clientAddress)
+            for i in range(len(recordtable)):
+                time.sleep(0.1)
+                serverSocket.sendto(recordtable[i].encode().encode(), clientAddress)
+        else:
+            response = process(message.decode())
+            serverSocket.sendto(response.encode(), clientAddress)
 
 
 
